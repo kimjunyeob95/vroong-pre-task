@@ -1,6 +1,6 @@
 version: '3'
 services:
-  onch:
+  mslabel:
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,11 +16,11 @@ services:
     volumes:
       - ./:/var/www/api
       - ./docker/php/php.ini:/etc/php.ini
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/conf.d/app.conf:/etc/nginx/sites-enabled/default
     ports:
-      - "8090:8090"
+      - "8090:80"
     extra_hosts:
-      - "api.xn--oi2b31he2e32g.xn--3e0b707e:127.0.0.1"
+      - "dev-api.xn--oi2b31he2e32g.xn--3e0b707e:127.0.0.1"
 volumes:
   lbdata:
     driver: local

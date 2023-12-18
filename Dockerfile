@@ -30,3 +30,5 @@ RUN groupadd -g 1000 www && \
 
 # Set Composer as superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
+
+ENTRYPOINT ["./docker/entrypoint.sh"]
