@@ -1,0 +1,91 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "mslabe API",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/token/create": {
+            "post": {
+                "tags": [
+                    "회원"
+                ],
+                "summary": "토큰생성",
+                "operationId": "aa5d75fb9e16c6607cb0742e8ad6affd",
+                "parameters": [
+                    {
+                        "name": "member_id",
+                        "in": "query",
+                        "description": "할당받은 ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "member_pw",
+                        "in": "query",
+                        "description": "비밀번호",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful sign in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getToken"
+                                },
+                                "example": {
+                                    "code": 200,
+                                    "Authorization": "xxxxxxxxxxxxx"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "아이디 또는 비밀번호를 확인해주세요.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getToken"
+                                },
+                                "example": {
+                                    "code": 400,
+                                    "error": "아이디를 입력하세요."
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "getToken": {
+                "required": [
+                    "member_id",
+                    "member_pw"
+                ],
+                "properties": {
+                    "member_id": {
+                        "type": "string",
+                        "example": "john_doe"
+                    },
+                    "member_pw": {
+                        "type": "string",
+                        "example": "password123"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

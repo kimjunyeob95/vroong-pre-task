@@ -1,18 +1,20 @@
 <?php
 
 return [
-    'default' => 'default',
+    'default' => 'v1',
     'documentations' => [
-        'default' => [
+        'v1' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'mslabel API',
             ],
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'api/documentation',
+                'api' => 'api/v1/documentation',
+                'docs' => 'api/v1/documentation',
+                'oauth2_callback' => 'api/v1/callback'
             ],
             'paths' => [
                 /*
@@ -23,12 +25,12 @@ return [
                 /*
                  * File name of the generated json documentation file
                 */
-                'docs_json' => 'api-docs.json',
+                'docs_json' => 'api-docs-v1.json',
 
                 /*
                  * File name of the generated YAML documentation file
                 */
-                'docs_yaml' => 'api-docs.yaml',
+                'docs_yaml' => 'api-docs-v1.yaml',
 
                 /*
                 * Set this to `json` or `yaml` to determine which documentation file to use in UI
@@ -41,8 +43,14 @@ return [
                 'annotations' => [
                     base_path('app'),
                 ],
-
             ],
+            'scanOptions' => [
+                'exclude' => [
+                    "Http/Annotations/Closed",
+                    "Http/Annotations/V1/Address",
+                    "Http/Annotations/V1/Order/InvoiceRegist",
+                ],
+            ]
         ],
     ],
     'defaults' => [
