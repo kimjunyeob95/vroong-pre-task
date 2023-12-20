@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\ProductRepository;
+use App\Repositories\UserRepository;
+use App\Services\ProductService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,8 +17,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(UserService::class, function ($app) {
-            return new UserService();
+        $this->app->singleton(UserService::class, function ($app) {
+            return new UserService($app->make(UserRepository::class));
+        });
+
+        $this->app->singleton(ProductService::class, function ($app) {
+            return new ProductService($app->make(ProductRepository::class));
         });
     }
 

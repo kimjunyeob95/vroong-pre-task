@@ -58,8 +58,8 @@ class AuthController extends Controller
      */
     private function createToken(User $user): array
     {
-        $expirationTime = time() + 3600;            // 1시간 후 만료
-        $data           = ["user"       => $user];
+        $expirationTime = time() + 3600;      // 1시간 후 만료
+        $data           = ["user" => $user];
         $payload        = [
             'iss' => Route::currentRouteName(), // 발행자
             'iat' => time(), // 발행 시간

@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
-use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,11 +15,12 @@ use Carbon\Carbon;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::name('v1.')->prefix('v1')->middleware(['jwt.verify'])->group(function () {
+    // 3초에 1번까지만 호출
+    Route::post('/token/create', [AuthController::class, 'tokenCreate'])->middleware(['throttle:1,0.05'])->name('token.create');
 
-Route::name('v1.')->prefix('v1')->middleware('jwt.verify')->group(function () {
-    Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
-    Route::get('/user/list', [UserController::class, 'list'])->name('user.list');
+    // 1초에 최대 3번까지 호출
+    Route::middleware(['throttle:3,1'])->group(function(){
+        Route::post('/product/list', [ProductController::class, 'list'])->name('product.list');
+    });
 });

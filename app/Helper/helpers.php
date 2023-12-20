@@ -136,11 +136,14 @@ if (!function_exists("helpers_success_message")) {
 if (!function_exists("helpers_json_response")) {
     function helpers_json_response(int $status, array $params = [], string $message = ""): JsonResponse
     {
+        $routeParts = explode(".", Route::currentRouteName());
+        $apiVersion = empty($routeParts[0]) ? "v1" : $routeParts[0];
+
         $result = [
             "status" => $status,
             "meta" => [
                 "timestamp"  => Carbon::now()->format('Y-m-d H:i:s'),
-                "apiVersion" => explode(".", Route::currentRouteName())[0] ?? "v1"
+                "apiVersion" => $apiVersion
             ]
         ];
         if( $status == HttpConstant::OK ){

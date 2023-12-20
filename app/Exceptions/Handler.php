@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Constants\HttpConstant;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +40,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        // 요청 빈도 제한 예외를 확인
+        if ($exception instanceof ThrottleRequestsException) {
+            return helpers_json_response(HttpConstant::INTERNAL_SERVER_ERROR, [], HttpConstant::ERROR_MESSAGE_TOO_MANY_REQUEST);
+        }
+
+        // 404 Not Found 예외 처리
+        if ($exception instanceof NotFoundHttpException) {
+            return helpers_json_response(HttpConstant::NOT_FOUND, [], HttpConstant::ERROR_MESSAGE_NOT_FOUND);
+        }
+
+        return parent::render($request, $exception);
     }
 }
