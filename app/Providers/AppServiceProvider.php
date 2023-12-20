@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use App\Services\ProductService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if ($this->app->environment('production')) {
+            // aws alb를 위한 처리
+            URL::forceScheme('https');
+        }
     }
 }
