@@ -22,8 +22,7 @@ namespace App\Annotations\v1;
  *     @OA\Property(
  *         property="data", 
  *         type="object"
- *     ),
- *     @OA\Property(property="message", type="string", example=""),
+ *     )
  * )
  * 
  * @OA\Schema(

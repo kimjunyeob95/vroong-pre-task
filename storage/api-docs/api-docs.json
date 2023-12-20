@@ -114,7 +114,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -141,10 +146,6 @@
                     },
                     "data": {
                         "type": "object"
-                    },
-                    "message": {
-                        "type": "string",
-                        "example": ""
                     }
                 },
                 "type": "object"

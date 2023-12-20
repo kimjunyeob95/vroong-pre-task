@@ -15,12 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('v1.')->prefix('v1')->middleware(['jwt.verify'])->group(function () {
-    // 3초에 1번까지만 호출
-    Route::post('/token/create', [AuthController::class, 'tokenCreate'])->middleware(['throttle:1,0.05'])->name('token.create');
+Route::name('v1.')->prefix('v1')->middleware(['jwt.verify','rateLimit'])->group(function () {
 
-    // 1초에 최대 3번까지 호출
-    Route::middleware(['throttle:3,1'])->group(function(){
-        Route::post('/product/list', [ProductController::class, 'list'])->name('product.list');
-    });
+    // 3초 이내에 최대 1번까지 호출
+    Route::post('/token/create', [AuthController::class, 'tokenCreate'])->name('token.create');
+
+    // 0.3초 이내에 최대 1번까지 호출
+    Route::post('/product/list', [ProductController::class, 'list'])->name('product.list');
 });

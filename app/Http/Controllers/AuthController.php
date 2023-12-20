@@ -38,16 +38,18 @@ class AuthController extends Controller
             }
     
             $credentials = $this->request->only(["name", "password"]);
-            if ($user = User::where('name', $credentials['name'])->first()) {
-                if (Hash::check($credentials['password'], $user->password)) {
-                    $result = $this->createToken($user);
-                    return helpers_json_response(HttpConstant::OK, $result);
-                }else{
-                    throw new Exception("비밀번호를 다시 확인해주세요.");
-                }
-            } else {
-                throw new Exception("없는 아이디입니다.");
+            $user = User::where('name', $credentials['name'])->first();
+            if (!$user) {
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], "없는 아이디입니다.");
             }
+
+            if (!Hash::check($credentials['password'], $user->password)) {
+                return helpers_json_response(HttpConstant::BAD_REQUEST, [], "비밀번호를 다시 확인해주세요.");
+            }
+
+            $result = $this->createToken($user);
+            return helpers_json_response(HttpConstant::OK, $result);
+
         } catch (Exception $e) {
             return helpers_json_response(HttpConstant::BAD_REQUEST, [], $e->getMessage());
         }

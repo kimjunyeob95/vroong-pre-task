@@ -25,6 +25,7 @@ namespace App\Annotations\v1\bProduct;
  *     path="/api/v1/product/list",
  *     summary="상품 리스트",
  *     tags={"상품"},
+ *     security={{"BearerAuth": {}}},
  *     @OA\RequestBody(
  *         required=true,
  *         @OA\JsonContent(ref="#/components/schemas/ProductListSchema")
