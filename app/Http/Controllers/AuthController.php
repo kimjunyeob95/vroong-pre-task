@@ -70,7 +70,7 @@ class AuthController extends Controller
         ];
 
         return [
-            'token'      => JWT::encode($payload, env('JWT_SECRET'), 'HS256'),
+            'token'      => JWT::encode($payload, (string)env('JWT_SECRET'), 'HS256'),
             'expires_at' => Carbon::createFromTimestamp($expirationTime)->format('Y-m-d H:i:s')
         ];
     }
