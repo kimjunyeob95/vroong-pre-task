@@ -25,10 +25,17 @@ $i = 0;
  */
 $i++;
 /* Authentication type */
-$cfg['Servers'][$i]['auth_type'] = 'cookie';
 /* Server parameters */
-$cfg['Servers'][$i]['host'] = 'localhost';
-$cfg['Servers'][$i]['compress'] = false;
+require_once 'load_env.php';
+
+$cfg['Servers'][$i]['host']            = getenv('DB_HOST');
+$cfg['Servers'][$i]['port']            = getenv('DB_PORT');
+$cfg['Servers'][$i]['user']            = getenv('DB_USERNAME');
+$cfg['Servers'][$i]['password']        = getenv('DB_PASSWORD');
+$cfg['Servers'][$i]['only_db']         = [getenv('DB_DATABASE')];
+$cfg['Servers'][$i]['hide_db']         = '^(information_schema|mysql|performance_schema|phpmyadmin)$';
+$cfg['Servers'][$i]['auth_type']       = 'cookie';
+$cfg['Servers'][$i]['compress']        = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 
 /**
