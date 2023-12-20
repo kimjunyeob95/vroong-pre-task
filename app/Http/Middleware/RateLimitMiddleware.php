@@ -20,16 +20,14 @@ class RateLimitMiddleware
         $routeName = $request->route()->getName();
 
         $validate = true;
-        if ($request->session()->has('last_request_time')) {
+        switch ($routeName) {
             // 마지막 요청 시간 검사
-            switch ($routeName) {
-                case 'v1.token.create':
-                    $validate = $this->checkValidateTime($request, 3.0);
-                    break;
-                default:
-                    $validate = $this->checkValidateTime($request, 0.3);
-                    break;
-            }
+            case 'v1.token.create':
+                $validate = $this->checkValidateTime($request, 3.0);
+                break;
+            default:
+                $validate = $this->checkValidateTime($request, 0.3);
+                break;
         }
 
         if( $validate == false ){
@@ -43,9 +41,9 @@ class RateLimitMiddleware
     {
         $bool = true;
 
-        $lastRequestTime = $request->session()->get('last_request_time');
+        $lastRequestTime = $request->session()->get('last_request_time') ?? now()->timestamp + 20; // default로 20초 시간 +해줌
         $currentTime     = now()->timestamp;
-        $timeDifference = $currentTime - $lastRequestTime;
+        $timeDifference  = $currentTime - $lastRequestTime;
 
         if ($timeDifference < $seconds) { // n초 이내의 요청인 경우
             $bool = false;
