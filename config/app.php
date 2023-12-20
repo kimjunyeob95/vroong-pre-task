@@ -1,7 +1,5 @@
 <?php
 
-use App\Providers\ApiLogServiceProvider;
-
 return [
 
     /*
@@ -178,7 +176,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        ApiLogServiceProvider::class,
+        App\Providers\ApiLogServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
     ],
 
