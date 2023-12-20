@@ -41,7 +41,7 @@ class RateLimitMiddleware
     {
         $bool = true;
 
-        $lastRequestTime = $request->session()->get('last_request_time') ?? now()->timestamp + 20; // default로 20초 시간 +해줌
+        $lastRequestTime = $request->session()->get('last_request_time') ?? now()->timestamp + 9999; // default로 9999초 시간 +해줌
         $currentTime     = now()->timestamp;
         $timeDifference  = $currentTime - $lastRequestTime;
 
