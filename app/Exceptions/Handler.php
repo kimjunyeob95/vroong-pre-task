@@ -46,7 +46,8 @@ class Handler extends ExceptionHandler
     {
         // 요청 빈도 제한 예외를 확인
         if ($exception instanceof ThrottleRequestsException) {
-            return helpers_json_response(HttpConstant::INTERNAL_SERVER_ERROR, [], HttpConstant::ERROR_MESSAGE_TOO_MANY_REQUEST);
+            $message = $exception->getMessage();
+            return helpers_json_response(HttpConstant::INTERNAL_SERVER_ERROR, [], $message);
         }
 
         // 404 Not Found 예외 처리

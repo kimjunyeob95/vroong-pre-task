@@ -25,9 +25,9 @@ class JwtMiddleware
             if (!$token) {
                 return helpers_json_response(HttpConstant::UNAUTHORIZED, [], "토큰을 전달해주세요.");
             }
-    
+
             $decodedToken = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
-    
+
             // 토큰이 유효한지 확인
             if ($this->isTokenExpired($decodedToken)) {
                 return helpers_json_response(HttpConstant::UNAUTHORIZED, [], "토큰의 유효시간이 만료되었습니다.");
@@ -35,7 +35,11 @@ class JwtMiddleware
     
             return $next($request);
         } catch (Exception $e) {
-            return helpers_json_response(HttpConstant::INTERNAL_SERVER_ERROR, [], $e->getMessage());
+            $message = $e->getMessage();
+            if( $e->getMessage() == "Expired token" ){
+                $message = "토큰의 유효시간이 만료되었습니다.";
+            }
+            return helpers_json_response(HttpConstant::INTERNAL_SERVER_ERROR, [], $message);
         }
        
     }

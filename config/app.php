@@ -178,7 +178,6 @@ return [
 
         App\Providers\ApiLogServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-
     ],
 
     /*

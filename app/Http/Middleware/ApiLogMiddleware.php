@@ -17,7 +17,11 @@ class ApiLogMiddleware
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        $request->captureApiLog($response);
+
+        if( env("APP_ENV") != "local" ){
+            $request->captureApiLog($response);
+        }
+
         return $response;
     }
 }

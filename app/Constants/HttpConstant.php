@@ -21,5 +21,5 @@ class HttpConstant
 
     public const ERROR_MESSAGE_NOT_FOUND             = "잘못된 접근입니다.";
     public const ERROR_MESSAGE_INTERNAL_SERVER_ERROR = "관리자에 문의 바랍니다.";
-    public const ERROR_MESSAGE_TOO_MANY_REQUEST      = "Too many requests";
+    public const ERROR_MESSAGE_TOO_MANY_REQUEST      = "해당 엔드포인트의 요청가능 횟수를 초과했습니다.";
 }
