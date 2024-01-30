@@ -17,4 +17,13 @@ Route::get('/', function () {
     abort(404);
 });
 
+Route::get('/test', function() {
+    return '
+        <script>
+            // JavaScript를 사용하여 페이지를 리디렉션
+            window.open("http://localhost:8090/phpmyadmin/");
+        </script>
+    ';
+});
+
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
