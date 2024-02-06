@@ -25,5 +25,5 @@ Route::name('v1.')->prefix('v1')->group(function () {
         Route::post('/product/list', [ProductController::class, 'list'])->name('product.list');
     });
 
-    Route::get('/how-to-lose-weight/{type}', [SolutionController::class, 'solutionDiet'])->name('solution.diet');
+    Route::get('/how-to-lose-weight/{type?}', [SolutionController::class, 'solutionDiet'])->name('solution.diet');
 });

@@ -4,6 +4,11 @@ namespace App\Providers;
 
 use App\Http\Controllers\SolutionController;
 use Illuminate\Support\ServiceProvider;
+use App\Interfaces\SolutionInterface;
+use App\Constants\SolutionConstant;
+use App\Services\DietExpertService;
+use App\Services\FitnessCoachService;
+use Illuminate\Support\Facades\Route;
 
 class SolutionServiceProvider extends ServiceProvider
 {
@@ -13,16 +18,21 @@ class SolutionServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->when(SolutionController::class)
-                //   ->needs(SolutionInterface::class)
-                  ->give(function ($app) {
-                      // 파라미터에 따라 결정 로직을 추가
-                      dd(request());
-                    //   if (request()->someCondition) {
-                    //       return new FirstService();
-                    //   } else {
-                    //       return new SecondService();
-                    //   }
-                  });
+            ->needs(SolutionInterface::class)
+            ->give(function ($app) {
+                $type = Route::input('type', SolutionConstant::SOLUTION_DIET);
+                switch ($type) {
+                    case SolutionConstant::SOLUTION_DIET:
+                        return new DietExpertService();
+                        break;
+                    case SolutionConstant::SOLUTION_FITNESS:
+                        return new FitnessCoachService();
+                        break;
+                    default:
+                        return new DietExpertService();
+                        break;
+                };
+            });
     }
 
     /**
