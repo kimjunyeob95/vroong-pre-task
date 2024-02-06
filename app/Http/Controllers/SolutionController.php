@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use App\Constants\SolutionConstant;
+use App\Constants\HttpConstant;
 use App\Interfaces\SolutionInterface;
+use Illuminate\Http\JsonResponse;
+use App\Constants\SolutionErrorMessageConstant;
+use Illuminate\Support\Facades\Validator;
 
 class SolutionController extends Controller
 {
@@ -18,9 +22,27 @@ class SolutionController extends Controller
         $this->solution = $solution;
     }
 
-    function solutionDiet($type = SolutionConstant::SOLUTION_DIET)
+    function solutionDiet($type = SolutionConstant::SOLUTION_DIET): JsonResponse
     {
-        dd($this->solution->getLifeStyleTag());
+        $validator = Validator::make($this->request->all(), [
+            'userLifeStyleTags' => 'required|array',
+        ], [
+            'userLifeStyleTags.required' => SolutionErrorMessageConstant::getErrorMessage("USERLIFESTYLETAGS"),
+            'userLifeStyleTags.array'    => SolutionErrorMessageConstant::getTypeErrorMessage("USERLIFESTYLETAGS"),
+        ]);
+
+        if ($validator->fails()) {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $validator->errors()->first());
+        }
+
+        $userLifeStyleTags = $this->request->post("userLifeStyleTags");
+
+        $result = $this->solution->solutionResult($userLifeStyleTags);
+        if( $result["isSuccess"] == true ){
+            return helpers_json_response(HttpConstant::OK, $result);
+        } else {
+            return helpers_json_response(HttpConstant::BAD_REQUEST, [], $result["msg"]);
+        }
     }
 
 }

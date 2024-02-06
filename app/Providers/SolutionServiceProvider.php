@@ -9,6 +9,7 @@ use App\Constants\SolutionConstant;
 use App\Services\DietExpertService;
 use App\Services\FitnessCoachService;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Request;
 
 class SolutionServiceProvider extends ServiceProvider
 {
@@ -17,11 +18,12 @@ class SolutionServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $type = Request::post("type", SolutionConstant::SOLUTION_DIET);
+
         $this->app->when(SolutionController::class)
             ->needs(SolutionInterface::class)
-            ->give(function ($app) {
-                $type = Route::input('type', SolutionConstant::SOLUTION_DIET);
-                switch ($type) {
+            ->give(function ($app) use ($type) {
+                switch (strtoupper($type)) {
                     case SolutionConstant::SOLUTION_DIET:
                         return new DietExpertService();
                         break;

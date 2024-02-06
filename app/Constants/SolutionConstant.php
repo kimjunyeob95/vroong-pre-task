@@ -15,11 +15,15 @@ class SolutionConstant
     public const FITNESS_SPINNING          = "Spinning";
 
     public const TAG_LIST = [
-        self::DIET_INTERMITTENT_FASTING => ["enough_time", "strong_will"],
-        self::DIET_LCHF                 => ["enough_money"],
-        self::FITNESS_CROSSFIT          => ["enough_money", "strong_will"],
-        self::FITNESS_CARDIO_EXERCISE   => ["strong_will"],
-        self::FITNESS_STRENGTH          => ["strong_will", "enough_time"],
-        self::FITNESS_SPINNING          => ["enough_money"]
+        self::SOLUTION_DIET => [
+            self::DIET_INTERMITTENT_FASTING => ["enough_time", "strong_will"],
+            self::DIET_LCHF                 => ["enough_money"]
+        ],
+        self::SOLUTION_FITNESS => [
+            self::FITNESS_CROSSFIT          => ["enough_money", "strong_will"],
+            self::FITNESS_CARDIO_EXERCISE   => ["strong_will"],
+            self::FITNESS_STRENGTH          => ["strong_will", "enough_time"],
+            self::FITNESS_SPINNING          => ["enough_money"]
+        ]
     ];
 }

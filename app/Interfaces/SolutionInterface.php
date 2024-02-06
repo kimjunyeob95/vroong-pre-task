@@ -4,6 +4,5 @@ namespace App\Interfaces;
 
 interface SolutionInterface
 {
-    public function setLifeStyleTag(): void;
-    public function getLifeStyleTag(): array;
+    public function solutionResult(array $userLifeStyleTags): array;
 }

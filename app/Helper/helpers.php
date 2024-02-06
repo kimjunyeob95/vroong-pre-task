@@ -97,37 +97,41 @@ if (!function_exists("debug_log")) {
 }
 
 if (!function_exists("helpers_default_message")) {
-    function helpers_default_message($isSuccess = false, $message = "잘못 된 접근입니다.")
+    function helpers_default_message(bool $isSuccess = false, string $message = "잘못 된 접근입니다.", array $data = []): array
     {
         return [
             "isSuccess" => $isSuccess,
             "msg"       => $message,
+            "data"      => $data,
         ];
     }
 }
 
 if (!function_exists("helpers_fail_message")) {
-    function helpers_fail_message($isSuccess = false, $message = "변경 사항이 없거나 처리가 실패하였습니다. 관리자에 문의 바랍니다.")
+    function helpers_fail_message(bool $isSuccess = false, string $message = "변경 사항이 없거나 처리가 실패하였습니다. 관리자에 문의 바랍니다.", array $data = []): array
     {
         return [
             "isSuccess" => $isSuccess,
             "msg"       => $message,
+            "data"      => $data,
         ];
     }
 }
 
 if (!function_exists("helpers_success_message")) {
-    function helpers_success_message($affectRows = 0, $message = "정상 처리 되었습니다.")
+    function helpers_success_message(array $data = [], int $affectRows = 0, string $message = "정상 처리 되었습니다."): array
     {
         if( $affectRows > 0){
             return [
                 "isSuccess" => true,
                 "msg"       => $message." 반영 수 :".$affectRows,
+                "data"      => $data,
             ];
         }else{
             return [
                 "isSuccess" => true,
                 "msg"       => $message,
+                "data"      => $data,
             ];
         }
     }
@@ -147,6 +151,7 @@ if (!function_exists("helpers_json_response")) {
             ]
         ];
         if( $status == HttpConstant::OK ){
+            unset($params["isSuccess"]);
             $result = array_merge($result, $params);
             if( trim($message) != "" ){
                 $result["message"] = $message;
@@ -161,7 +166,7 @@ if (!function_exists("helpers_json_response")) {
             $result = array_merge($result, $error);
         }
 
-        return response()->json($result, $status); 
+        return response()->json($result, $status);
     }
 }
 
