@@ -57,7 +57,7 @@ namespace App\Annotations\v1\vroong\aSolution;
  *     tags={"사전과제"},
  *     @OA\RequestBody(
  *         required=true,
- *         @OA\JsonContent(ref="#/components/schemas/SolutionListSuccessResponse")
+ *         @OA\JsonContent(ref="#/components/schemas/SolutionListSchema")
  *     ),
  *     @OA\Response(
  *         response=200,
