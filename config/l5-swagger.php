@@ -7,13 +7,12 @@ return [
             'api' => [
                 'title' => 'mslabel API',
             ],
-
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'api/v1/documentation',
-                'docs' => 'api/v1/documentation',
+                'api' => 'api/v1/mslabel/swagger',
+                'docs' => 'api/v1/mslabel/swagger',
                 'oauth2_callback' => 'api/v1/callback'
             ],
             'paths' => [
@@ -41,15 +40,55 @@ return [
                  * Absolute paths to directory containing the swagger annotations are stored.
                 */
                 'annotations' => [
-                    base_path('app'),
+                    base_path('app/Annotations/v1/mslabel'),
                 ],
             ],
             'scanOptions' => [
-                'exclude' => [
-                    "Http/Annotations/Closed",
-                    "Http/Annotations/V1/Address",
-                    "Http/Annotations/V1/Order/InvoiceRegist",
+                'exclude' => [],
+            ]
+        ],
+        'vroong.v1' => [
+            'api' => [
+                'title' => 'vroong API',
+            ],
+            'routes' => [
+                /*
+                 * Route for accessing api documentation interface
+                */
+                'api' => 'api/v1/vroong/swagger',
+                'docs' => 'api/v1/vroong/swagger',
+                'oauth2_callback' => 'api/v1/vroong/callback'
+            ],
+            'paths' => [
+                /*
+                 * Edit to include full URL in ui for assets
+                */
+                'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
+
+                /*
+                 * File name of the generated json documentation file
+                */
+                'docs_json' => 'api-vroong-docs.json',
+
+                /*
+                 * File name of the generated YAML documentation file
+                */
+                'docs_yaml' => 'api-vroong-docs.yaml',
+
+                /*
+                * Set this to `json` or `yaml` to determine which documentation file to use in UI
+                */
+                'format_to_use_for_docs' => env('L5_FORMAT_TO_USE_FOR_DOCS', 'json'),
+
+                /*
+                 * Absolute paths to directory containing the swagger annotations are stored.
+                */
+                'annotations' => [
+                    base_path('app/Annotations/v1/vroong'),
                 ],
+            ],
+            'scanOptions' => [
+                'exclude' => [],
             ]
         ],
     ],

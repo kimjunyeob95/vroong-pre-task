@@ -1,23 +1,23 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "mslabe API",
+        "title": "vroong API",
         "version": "1.0"
     },
     "paths": {
-        "/api/v1/token/create": {
+        "/api/v1/how-to-lose-weight": {
             "post": {
                 "tags": [
-                    "회원"
+                    "사전과제"
                 ],
-                "summary": "토큰 생성",
-                "operationId": "1fd6678d0f1967c7eb8b17ee47c68308",
+                "summary": "솔루션 추천 리스트",
+                "operationId": "926b4c8c0ae59185932452c14a6b45b7",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TokenCreateSchema"
+                                "$ref": "#/components/schemas/SolutionListSuccessResponse"
                             }
                         }
                     }
@@ -28,58 +28,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SuccessTokenResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid input",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/400ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/500ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/product/list": {
-            "post": {
-                "tags": [
-                    "상품"
-                ],
-                "summary": "상품 리스트",
-                "operationId": "1fea6b2d8ad1a2668a844a8c0a03bac3",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ProductListSchema"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SuccessResponse"
+                                    "$ref": "#/components/schemas/SolutionListSuccessResponse"
                                 }
                             }
                         }
@@ -114,12 +63,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "BearerAuth": []
-                    }
-                ]
+                }
             }
         }
     },
@@ -290,24 +234,32 @@
                 },
                 "type": "object"
             },
-            "TokenCreateSchema": {
+            "SolutionListSchema": {
                 "required": [
-                    "name",
-                    "password"
+                    "userLifeStyleTags"
                 ],
                 "properties": {
-                    "name": {
+                    "type": {
+                        "description": "DIET 또는 FITNESS 입력",
                         "type": "string",
-                        "example": "john_doe"
+                        "example": "DIET"
                     },
-                    "password": {
-                        "type": "string",
-                        "example": "password123"
+                    "userLifeStyleTags": {
+                        "description": "라이프스타일 목록 enough_time, strong_will, enough_money",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "enough_money",
+                            "enough_time",
+                            "strong_will"
+                        ]
                     }
                 },
                 "type": "object"
             },
-            "SuccessTokenResponse": {
+            "SolutionListSuccessResponse": {
                 "properties": {
                     "status": {
                         "type": "integer",
@@ -326,50 +278,43 @@
                         },
                         "type": "object"
                     },
-                    "token": {
+                    "msg": {
                         "type": "string",
-                        "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+                        "example": "정상 처리 되었습니다."
                     },
-                    "expires_at": {
-                        "type": "string",
-                        "example": "2023-12-19 18:45:50"
+                    "data": {
+                        "description": "추천 솔루션 및 태그 포함 수 전달",
+                        "properties": {
+                            "recomSolutionRank": {
+                                "description": "전달한 라이프스타일 태그로 분석해 추천 솔루션을 내림차순으로 전달",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "example": [
+                                    "Intermittent Fasting",
+                                    "LCHF"
+                                ]
+                            },
+                            "includeTagCount": {
+                                "description": "솔루션에 포함된 라이프스타일 태그 수",
+                                "properties": {
+                                    "Intermittent Fasting": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "LCHF": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
-            },
-            "ProductListSchema": {
-                "required": [
-                    "page",
-                    "pageSize",
-                    "orderBy",
-                    "direction"
-                ],
-                "properties": {
-                    "page": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "pageSize": {
-                        "type": "string",
-                        "example": 40
-                    },
-                    "orderBy": {
-                        "type": "string",
-                        "example": "prd_name"
-                    },
-                    "direction": {
-                        "type": "string",
-                        "example": "desc"
-                    }
-                },
-                "type": "object"
-            }
-        },
-        "securitySchemes": {
-            "BearerAuth": {
-                "type": "http",
-                "bearerFormat": "JWT",
-                "scheme": "bearer"
             }
         }
     }

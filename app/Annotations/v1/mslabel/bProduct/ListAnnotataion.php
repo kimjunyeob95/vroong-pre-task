@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Annotations\v1\bProduct;
+namespace App\Annotations\v1\mslabel\bProduct;
 
 /**
  * 

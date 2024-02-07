@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Annotations\v1\aUser;
+namespace App\Annotations\v1\mslabel\aUser;
 
 /**
+ * 
  * @OA\Schema(
  *     schema="TokenCreateSchema",
  *     required={"name", "password"},

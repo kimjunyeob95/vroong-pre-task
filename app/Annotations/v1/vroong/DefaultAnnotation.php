@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Annotations\v1;
+namespace App\Annotations\v1\vroong;
+
+use OpenApi\Annotations as OA;
 
 /**
  *
  *
  * @OA\Info(
- *  title="mslabe API",
+ *  title="vroong API",
  *  version="1.0",
  * )
  *
