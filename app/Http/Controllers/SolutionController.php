@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ProductService;
 use Illuminate\Http\Request;
-use App\Constants\SolutionConstant;
 use App\Constants\HttpConstant;
 use App\Interfaces\SolutionInterface;
 use Illuminate\Http\JsonResponse;
@@ -22,7 +20,7 @@ class SolutionController extends Controller
         $this->solution = $solution;
     }
 
-    function solutionDiet($type = SolutionConstant::SOLUTION_DIET): JsonResponse
+    function solutionDiet(): JsonResponse
     {
         $validator = Validator::make($this->request->all(), [
             'userLifeStyleTags' => 'required|array',

@@ -8,7 +8,6 @@ use App\Interfaces\SolutionInterface;
 use App\Constants\SolutionConstant;
 use App\Services\DietExpertService;
 use App\Services\FitnessCoachService;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
 
 class SolutionServiceProvider extends ServiceProvider
