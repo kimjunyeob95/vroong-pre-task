@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Abstracts\SolutionAdapter;
 use Illuminate\Http\Request;
 use App\Constants\HttpConstant;
-use App\Interfaces\SolutionInterface;
 use Illuminate\Http\JsonResponse;
 use App\Constants\SolutionErrorMessageConstant;
 use Illuminate\Support\Facades\Validator;
@@ -12,9 +12,9 @@ use Illuminate\Support\Facades\Validator;
 class SolutionController extends Controller
 {
     private Request $request;
-    private SolutionInterface $solution;
+    private SolutionAdapter $solution;
 
-    function __construct(Request $request, SolutionInterface $solution)
+    function __construct(Request $request, SolutionAdapter $solution)
     {
         $this->request  = $request;
         $this->solution = $solution;

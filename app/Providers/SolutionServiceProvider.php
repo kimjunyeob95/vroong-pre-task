@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\SolutionController;
+use App\Abstracts\SolutionAdapter;
 use Illuminate\Support\ServiceProvider;
-use App\Interfaces\SolutionInterface;
 use App\Constants\SolutionConstant;
 use App\Services\DietExpertService;
 use App\Services\FitnessCoachService;
@@ -17,23 +16,17 @@ class SolutionServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $type = Request::post("type", SolutionConstant::SOLUTION_DIET);
+        $this->app->bind(SolutionAdapter::class, function ($app) {
+            $type = Request::post("type", SolutionConstant::SOLUTION_DIET);
 
-        $this->app->when(SolutionController::class)
-            ->needs(SolutionInterface::class)
-            ->give(function ($app) use ($type) {
-                switch (strtoupper($type)) {
-                    case SolutionConstant::SOLUTION_DIET:
-                        return new DietExpertService();
-                        break;
-                    case SolutionConstant::SOLUTION_FITNESS:
-                        return new FitnessCoachService();
-                        break;
-                    default:
-                        return new DietExpertService();
-                        break;
-                };
-            });
+            switch (strtoupper($type)) {
+                case SolutionConstant::SOLUTION_FITNESS:
+                    return new FitnessCoachService();
+                case SolutionConstant::SOLUTION_DIET:
+                default:
+                    return new DietExpertService();
+            }
+        });
     }
 
     /**
